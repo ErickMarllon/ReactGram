@@ -1,0 +1,68 @@
+#login,
+#register {
+  border: 1px solid #363636;
+  background-color: #000;
+  padding: 1.5em 2em;
+  max-width: 33%;
+  margin: 2em auto;
+}
+
+#login h2,
+#register h2 {
+  text-align: center;
+  font-size: 2.1em;
+  margin-top: 0;
+}
+.subtitle {
+  font-weight: bold;
+  color: #999;
+  margin-bottom: 1.5em;
+}
+
+#login form,
+#register form {
+  padding-bottom: 1.5em;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #363636;
+}
+
+#login p,
+#register p {
+  text-align: center;
+}
+
+#login p a,
+#register p a {
+  font-weight: bold;
+  color: #0094f6;
+}
+
+#login .password,
+#register .password {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#login .password input,
+#register .password input {
+  position: relative;
+  width: 100%;
+  float: right;
+}
+
+#login .showPassword,
+#register .showPassword {
+  margin: -9px 0 0 0;
+  position: absolute;
+  cursor: pointer;
+  padding: 9px 10px;
+  transition:  2s ease-in-out;
+}
+
+#login .showPassword svg,
+#register .showPassword svg {
+  margin-top: 3px;
+  transition: 2s ease-in-out;
+
+}
