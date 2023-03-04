@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// Importing the controllers for photo-related logic
+// Controller
 const {
   insertPhoto,
   deletePhoto,
@@ -10,27 +10,22 @@ const {
   getPhotoById,
   updatePhoto,
   likePhoto,
+  unlikePhoto,
   commentPhoto,
+  searchPhotos,
 } = require("../controllers/PhotoController");
 
-// Importing the middlewares for photo related logic
+// Middlewares
+const authGuard = require("../middlewares/authGuard");
+const validate = require("../middlewares/handleValidation");
 const {
   photoInsertValidation,
   photoUpdateValidation,
   commentValidation,
-} = require("../middlewares/PhotoValidation");
-
-// Check authentication
-const authGuard = require("../middlewares/authGuard");
-
-// Handle any validation errors
-const validate = require("../middlewares/handleValidation");
-
-// Upload the image
+} = require("../middlewares/photoValidation");
 const { imageUpload } = require("../middlewares/imageUpload");
 
-// Define routes for the /photo 
-// Insert a photo
+// Routes
 router.post(
   "/",
   authGuard,
@@ -39,26 +34,22 @@ router.post(
   validate,
   insertPhoto
 );
-
-// Delete a photo
 router.delete("/:id", authGuard, deletePhoto);
+router.get("/", getAllPhotos);
+router.get("/user/:id", getUserPhotos);
+router.get("/search", searchPhotos);
 
-// Get all the photos
-router.get("/", authGuard, getAllPhotos);
-
-// Get photo for a user
-router.get("/user/:id", authGuard, getUserPhotos);
-
-// Get a photo by id
-router.get("/:id", authGuard, getPhotoById);
-
-// Update a photo
-router.put("/:id", authGuard, photoUpdateValidation(), validate, updatePhoto);
-
-// Like a photo
+router.get("/:id", getPhotoById);
+router.put(
+  "/:id",
+  authGuard,
+  imageUpload.single("image"),
+  photoUpdateValidation(),
+  validate,
+  updatePhoto
+);
 router.put("/like/:id", authGuard, likePhoto);
-
-// Comment on a photo
+router.put("/unlike/:id", authGuard, unlikePhoto);
 router.put(
   "/comment/:id",
   authGuard,

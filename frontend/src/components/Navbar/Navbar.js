@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // Style
 import "./Navbar.css";
 
@@ -21,11 +21,12 @@ import { logout, reset } from "../../slices/authSlice";
 
 // Components
 import { NavLink, Link } from "react-router-dom";
+import { DarkMode } from "../DarkMode/DarkMode";
 
 const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
-
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,14 +36,26 @@ const Navbar = () => {
 
     navigate("/login");
   };
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (query) {
+      return navigate(`/search?q=${query}`);
+    }
+  };
   return (
     <nav id="nav">
       <Link to="/"> ReactGram </Link>
-      <form id="search-form">
+      <form id="search-form" onSubmit={handleSearch}>
         <BsSearch />
-        <input type="text" placeholder="Pesquisar" />
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          onChange={(e) => setQuery(e.target.value)}
+        />
       </form>
       <ul id="nav-links">
+        <DarkMode />
         {auth ? (
           <>
             <li>
@@ -53,7 +66,7 @@ const Navbar = () => {
             {user && (
               <>
                 <li>
-                  <NavLink to={`/user/${user._id}`}>
+                  <NavLink to={`/users/${user._id}`}>
                     <BsFillCameraFill />
                   </NavLink>
                 </li>

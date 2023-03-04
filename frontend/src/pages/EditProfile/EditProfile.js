@@ -10,10 +10,12 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Redux
-import { profile, updateProfile, resetMessage } from "../../slices/userSlice";
+import { profile, updateProfile } from "../../slices/userSlice";
 
 // Components
 import Message from "../../components/Message/Message";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
+import Loading from "../../components/Loading/Loading";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -25,11 +27,12 @@ const EditProfile = () => {
   const [profileImage, setProfileImage] = useState("");
   const [bio, setBio] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+
+  const resetMessage = useResetComponentMessage(dispatch);
   // Load user data
   useEffect(() => {
     dispatch(profile());
   }, [dispatch]);
-
 
   // fill user form
   useEffect(() => {
@@ -39,7 +42,6 @@ const EditProfile = () => {
       setBio(user.bio);
     }
   }, [user]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,9 +74,7 @@ const EditProfile = () => {
 
     await dispatch(updateProfile(formData));
 
-    setTimeout(() => {
-      dispatch(resetMessage());
-    }, 2000);
+    resetMessage();
   };
 
   const toggleShowPassword = () => setShow(!show);
@@ -88,6 +88,9 @@ const EditProfile = () => {
     // change image state
     setProfileImage(image);
   };
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div id="editProfile">
       <h2>Edite seus dados.</h2>
@@ -122,7 +125,7 @@ const EditProfile = () => {
         />
         <label>
           <span>Imagem de perfil:</span>
-          <input type="file"  onChange={handleFile} />
+          <input type="file" onChange={handleFile} />
         </label>
         <label>
           <span>Bio:</span>

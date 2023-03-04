@@ -12,6 +12,7 @@ import Message from "../../../components/Message/Message";
 
 // Components
 import { Link } from "react-router-dom";
+import Loading from "../../../components/Loading/Loading";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -39,7 +40,9 @@ const Login = () => {
 
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div id="login">
       <h2>ReactGram</h2>

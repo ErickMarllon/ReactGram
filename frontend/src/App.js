@@ -15,15 +15,25 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login/Login";
 import Register from "./pages/Auth/Register/Register";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import Profile from "./pages/Profile/Profile";
+import Photo from "./pages/Photo/Photo";
+import Search from "./pages/Search/Search";
+import Loading from "./components/Loading/Loading";
+
+
+
+
 
 function App() {
+
   const { auth, loading } = useAuth();
   if (loading) {
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
   return (
     <div className="App">
       <BrowserRouter>
+   
         <Navbar />
         <div className="container">
           <Routes>
@@ -35,7 +45,18 @@ function App() {
               path="/profile"
               element={auth ? <EditProfile /> : <Navigate to="/login" />}
             />
-
+            <Route
+              path="/users/:id"
+              element={auth ? <Profile /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/photos/:id"
+              element={auth ? <Photo /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/search"
+              element={auth ? <Search /> : <Navigate to="/login" />}
+            />
             <Route
               path="/login"
               element={!auth ? <Login /> : <Navigate to="/" />}

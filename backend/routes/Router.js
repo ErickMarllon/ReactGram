@@ -9,9 +9,6 @@ router.use("/api/users", require("./UserRoutes"));
 // add routes for /api/photos
 router.use("/api/photos", require("./PhotoRoutes"));
 
-// add routes for /api/search
-router.use("/api/search", require("./SearchRoutes"));
-
 // test router --- rota de teste
 
 router.get("/", (req, res) => {

@@ -4,8 +4,8 @@ const router = express.Router();
 // Importing the controllers for user-related logic
 const {
   register,
-  login,
   getCurrentUser,
+  login,
   update,
   getUserById,
 } = require("../controllers/UserController");

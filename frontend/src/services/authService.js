@@ -6,9 +6,10 @@ const register = async (data) => {
 
   try {
     const res = await fetch(api + "/users/register", config)
- 
+      .then((res) => res.json())
+      .catch((err) => err);
 
-      if (res._id) {
+    if (res) {
       localStorage.setItem("user", JSON.stringify(res));
     }
 
@@ -17,6 +18,7 @@ const register = async (data) => {
     console.log(error);
   }
 };
+
 
 // Logout a user
 const logout = () => {

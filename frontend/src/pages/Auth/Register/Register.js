@@ -4,15 +4,15 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
 // Components
 import { Link } from "react-router-dom";
+import Message from "../../../components/Message/Message";
+import Loading from "../../../components/Loading/Loading";
 
 // Hooks
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-
 // Redux
 import { register, reset } from "../../../slices/authSlice";
-import Message from "../../../components/Message/Message";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -20,10 +20,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-
   const dispatch = useDispatch();
 
-  const { loading, error,success } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,11 +33,7 @@ const Register = () => {
       password,
       confirmPassword,
     };
-
-    console.log(user);
-
     dispatch(register(user));
-
   };
   const [show, setShow] = useState(false);
   const toggleShowPassword = () => setShow(!show);
@@ -47,8 +42,10 @@ const Register = () => {
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
-  console.log(success);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div id="register">
       <h2>ReactGram</h2>
@@ -85,7 +82,7 @@ const Register = () => {
           value={confirmPassword}
           autoComplete="off"
         />
-        
+
         {!loading && <input type="submit" value="Cadastrar" />}
         {loading && <input type="submit" disabled value="Aguarde..." />}
 

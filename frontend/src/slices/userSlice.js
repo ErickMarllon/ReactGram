@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userService from "../services/userServices";
 
 const initialState = {
@@ -8,16 +8,19 @@ const initialState = {
   loading: false,
   message: null,
 };
-// Get user details
+
+// Get user details, for edit data
 export const profile = createAsyncThunk(
   "user/profile",
   async (user, thunkAPI) => {
     const token = thunkAPI.getState().auth.user.token;
+
     const data = await userService.profile(user, token);
 
     return data;
   }
 );
+
 // Update user details
 export const updateProfile = createAsyncThunk(
   "user/update",
@@ -31,11 +34,10 @@ export const updateProfile = createAsyncThunk(
       return thunkAPI.rejectWithValue(data.errors[0]);
     }
 
-    console.log(data);
-
     return data;
   }
 );
+
 // Get user details
 export const getUserDetails = createAsyncThunk(
   "user/get",
@@ -44,13 +46,9 @@ export const getUserDetails = createAsyncThunk(
 
     const data = await userService.getUserDetails(id, token);
 
-    console.log(data);
-
     return data;
   }
 );
-
-// Functions
 
 export const userSlice = createSlice({
   name: "user",
