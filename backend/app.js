@@ -18,10 +18,16 @@ app.use(express.urlencoded({ extended: false }));
 
 //Solve CORS --- resolvendo cors  quando executa requisições em um mesmo dominio
 // origin é o site que o projeto vai ficar  se mudar o app para de funcionar
+
 app.use(
   cors({
-    origin: "*",
-    credentials: true,
+    origin: [
+      "https://react-gram-fpj3-erickmarllon.vercel.app",
+      "https://react-gram-fpj3-git-main-erickmarllon.vercel.app",
+      "https://react-gram-fpj3.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:3001",
+    ],
   })
 );
 
