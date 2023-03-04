@@ -18,7 +18,12 @@ app.use(express.urlencoded({ extended: false }));
 
 //Solve CORS --- resolvendo cors  quando executa requisições em um mesmo dominio
 // origin é o site que o projeto vai ficar  se mudar o app para de funcionar
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 // upload directory --- diretorio de upload de imagens
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
